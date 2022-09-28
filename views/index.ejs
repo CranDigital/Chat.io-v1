@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/argon-dashboard@1.2.0/assets/css/argon.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Chat feito em Socket.io</title>
+</head>
+
+<body>
+  <div class="join-container">
+    <header class="join-header">
+      <h1 class="text-white"><i class="fas fa-smile"></i> Chat.js</h1>
+    </header>
+    <main class="join-main">
+      <form id="chat-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input tabindex="0" class="form-control" type="text" name="username" id="username" placeholder="Enter username..."
+            required />
+        </div>
+        <div class="form-group">
+          <label for="room">Room</label>
+          <select class="form-control" name="room" id="room">
+            <option value="Geral">Geral</option>
+            <option value="Jogos">Jogos</option>
+            <option value="Animes">Animes</option>
+            <option value="Filmes">Filmes</option>
+            <option value="Séries">Séries</option>
+            <option value="Programação">Programação</option>
+          </select>
+        </div>
+        <center>
+          <small class="text-white">
+            Ou <a href="#" class="text-secondary" onclick="checkUser()"><u>clique aqui</u></a> para criar uma sala
+          </small>
+        </center>
+        <button type="submit" class="btn btn-secondary">Join Chat</button>
+      </form>
+    </main>
+  </div>
+  
+  <!-- Modal -->
+
+  <div class="modal fade" id="addRoom" tabindex="-1" role="dialog" aria-labelledby="addRoom" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Criar sala</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="form-group" id="add-form">
+          <div class="modal-body">  
+            <label for="name">Nome da sala</label>
+            <input type="text" id="name" class="form-control" placeholder="Digite o nome da sala">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    function checkUser() {
+
+      let userField = String(document.getElementById('username').value).trim()
+
+      if (!userField) {
+        alert('Você precisa digitar um nome primeiro!')
+      } else {
+        $('#addRoom').modal('show')
+      }
+
+    }
+
+    document.getElementById('chat-form').addEventListener('submit', (e) => {
+      e.preventDefault()
+      localStorage.setItem('username', e.target.elements.username.value)
+      window.location.href = `/chat?room=${e.target.elements.room.value}`
+    })
+
+    document.getElementById('add-form').addEventListener('submit', (e) => {
+      e.preventDefault()
+      localStorage.setItem('username', document.getElementById('username').value)
+      window.location.href = `/chat?room=${e.target.elements.name.value}`
+    })
+
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/argon-dashboard@1.2.0/assets/js/argon.min.js"></script>
+
+</body>
+
+</html>
